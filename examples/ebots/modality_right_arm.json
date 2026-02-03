@@ -1,0 +1,36 @@
+{
+    "state": {
+        "arm_r": {
+            "start": 7,
+            "end": 13
+        },
+        "arm_r_finger": {
+            "start": 13,
+            "end": 14
+        }
+    },
+    "action": {
+        "arm_r": {
+            "start": 7,
+            "end": 13
+        },
+        "arm_r_finger": {
+            "start": 13,
+            "end": 14
+        }
+    },
+    "video": {
+        "cam_high": {
+            "original_key": "observation.images.cam_high"
+        },
+        "cam_right_wrist": {
+            "original_key": "observation.images.cam_right_wrist"
+        }
+    },
+    "annotation": {
+        "human.task_description": {
+            "original_key": "task_index"
+        }
+    }
+}
+
