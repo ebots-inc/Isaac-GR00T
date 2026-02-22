@@ -78,3 +78,7 @@ class DataConfig:
     image_crop_size: List[int] = field(default_factory=lambda: [244, 244])
     image_target_size: List[int] = field(default_factory=lambda: [224, 224])
     video_backend: str = "torchcodec"
+
+    # Right-wrist camera masking: if set, episodes with index < this value get
+    # cam_right_wrist replaced by black images (e.g. 547 = first 547 episodes masked).
+    mask_right_wrist_until_episode: Optional[int] = None

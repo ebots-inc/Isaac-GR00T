@@ -7,6 +7,19 @@ export CUDA_VISIBLE_DEVICES=0
 #   left_arm (default), bimanual, right_arm
 export EBOTS_CONFIG_VARIANT=${EBOTS_CONFIG_VARIANT:-left_arm}
 
+# masking
+# --mask-right-wrist-until-episode 548 \
+
+# finetuning
+# --warmup-ratio 0.1 \ 
+# --learning-rate 5e-6 \
+# --state_dropout_prob 0.15 \
+
+# high res
+# --global-batch-size 16 \
+# --gradient-accumulation-steps 2 \
+# --dataloader-num-workers 4 \
+
 # master_port: pick any unused TCP port (commonly 29501–29600). 
 # If running one job, 29500 is usually fine.
 # Check if free: ss -ltn | grep ':29500 '

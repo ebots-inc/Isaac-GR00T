@@ -88,5 +88,7 @@ if __name__ == "__main__":
     config.data.shard_size = ft_config.shard_size
     config.data.episode_sampling_rate = ft_config.episode_sampling_rate
     config.data.num_shards_per_epoch = ft_config.num_shards_per_epoch
+    if ft_config.mask_right_wrist_until_episode is not None:
+        config.data.mask_right_wrist_until_episode = ft_config.mask_right_wrist_until_episode
 
     run(config)

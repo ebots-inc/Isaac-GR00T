@@ -72,7 +72,7 @@ ebots_config = {
 ebots_left_arm_config = {
     "video": ModalityConfig(
         delta_indices=[0],
-        modality_keys=["cam_high", "cam_left_wrist"],
+        modality_keys=["cam_high", "cam_left_wrist", "cam_right_wrist"],
     ),
     "state": ModalityConfig(
         delta_indices=[0],

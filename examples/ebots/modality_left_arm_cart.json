@@ -29,6 +29,9 @@
         },
         "cam_left_wrist": {
             "original_key": "observation.images.cam_left_wrist"
+        },
+        "cam_right_wrist": {
+            "original_key": "observation.images.cam_right_wrist"
         }
     },
     "annotation": {

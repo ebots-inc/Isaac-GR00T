@@ -123,6 +123,7 @@ class ShardedSingleStepDataset(ShardedDataset):
         episode_sampling_rate: float = 0.1,
         seed: int = 42,
         allow_padding: bool = False,
+        mask_right_wrist_until_episode: int | None = None,
     ):
         """Initialize single-step dataset with sharding configuration."""
         super().__init__(dataset_path)
@@ -144,6 +145,7 @@ class ShardedSingleStepDataset(ShardedDataset):
             modality_configs=modality_configs,
             video_backend=video_backend,
             video_backend_kwargs=video_backend_kwargs,
+            mask_right_wrist_until_episode=mask_right_wrist_until_episode,
         )
 
         # Create balanced shards from episode timesteps

@@ -116,3 +116,12 @@ class FinetuneConfig:
 
     num_shards_per_epoch: int = int(1e5)
     """Number of shards to use for the dataset. reduce this number if vram is limited."""
+
+    mask_right_wrist_until_episode: int | None = None
+    """
+    If set, right wrist camera images are replaced with black for episodes with
+    index < this value (e.g. 547 = first 547 episodes). Remaining episodes keep
+    valid cam_right_wrist. Use for combined datasets where only some episodes
+    have right wrist cam; model learns from high + left + black for masked
+    episodes and high + left + right for the rest.
+    """

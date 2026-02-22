@@ -102,6 +102,7 @@ class LeRobotEpisodeLoader:
         modality_configs: dict[str, ModalityConfig],
         video_backend: str = "torchcodec",
         video_backend_kwargs: dict[str, Any] | None = None,
+        mask_right_wrist_until_episode: int | None = None,
     ) -> None:
         """
         Initialize LeRobot episode loader with dataset path and modality configurations.
@@ -114,6 +115,7 @@ class LeRobotEpisodeLoader:
         self.dataset_path = Path(dataset_path)
         self.video_backend = video_backend
         self.video_backend_kwargs = video_backend_kwargs
+        self.mask_right_wrist_until_episode = mask_right_wrist_until_episode
 
         if not self.dataset_path.is_dir():
             raise FileNotFoundError(f"Dataset path does not exist: {self.dataset_path}")
@@ -480,6 +482,21 @@ class LeRobotEpisodeLoader:
 
         # Load synchronized video data
         video_data = self._load_video_data(episode_id, np.arange(actual_length))
+
+        # Mask right wrist camera to black for episodes before the cutoff (e.g. first 547)
+        if (
+            self.mask_right_wrist_until_episode is not None
+            and idx < self.mask_right_wrist_until_episode
+            and "cam_right_wrist" in video_data
+        ):
+            frames = video_data["cam_right_wrist"]
+            if len(frames) > 0:
+                # frames shape: (N, H, W, C) from get_frames_by_indices
+                h, w = frames.shape[1], frames.shape[2]
+                video_data["cam_right_wrist"] = np.zeros(
+                    (len(frames), h, w, frames.shape[3]),
+                    dtype=frames.dtype,
+                )
 
         # Add video frames to dataframe as PIL Images
         for key in video_data.keys():
