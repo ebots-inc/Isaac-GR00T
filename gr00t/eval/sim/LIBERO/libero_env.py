@@ -1,3 +1,18 @@
+# SPDX-FileCopyrightText: Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 """
 LIBERO environment
 
@@ -141,6 +156,9 @@ class LiberoEnv(gym.Env):
         return new_obs
 
     def reset(self, seed=None, options=None):
+        if seed is not None:
+            # OffScreenRenderEnv follows the robosuite API: .seed(int), not reset(seed=...).
+            self._env.seed(int(seed))
         observation = self._env.reset()
         observation = self._process_observation(observation)
         info = {"success": self._env.check_success()}
@@ -199,7 +217,13 @@ if __name__ == "__main__":
     benchmark_dict = benchmark.get_benchmark_dict()
     task_suite_name = "libero_10"  # can also choose libero_spatial, libero_object, etc.
     task_suite = benchmark_dict[task_suite_name]()
-    for key in ["libero_10", "libero_spatial", "libero_object", "libero_goal", "libero_90"]:
+    for key in [
+        "libero_10",
+        "libero_spatial",
+        "libero_object",
+        "libero_goal",
+        "libero_90",
+    ]:
         for task_name in benchmark_dict[key]().get_task_names():
             print(f"- {key}/{task_name}")
 
@@ -217,7 +241,11 @@ if __name__ == "__main__":
     )
 
     # step over the environment
-    env_args = {"bddl_file_name": task_bddl_file, "camera_heights": 128, "camera_widths": 128}
+    env_args = {
+        "bddl_file_name": task_bddl_file,
+        "camera_heights": 128,
+        "camera_widths": 128,
+    }
     env = OffScreenRenderEnv(**env_args)
     env.seed(0)
     env.reset()
